@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Geo Location Explorer
 
-## Getting Started
+A real-time location tracking app built with Next.js, MapLibre GL, and Prisma. Draw custom zones on the map, simulate a person walking, and get notified when they enter or leave zones.
 
-First, run the development server:
+![Screenshot](public/screenshot.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+![Screenshot](public/screenshot-2.png)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Interactive map with dark/light theme support
+- Draw custom polygon zones directly on the map
+- Simulated person marker that walks randomly at realistic speed
+- Marker turns **blue** inside a zone, **red** outside
+- Toast notifications on zone entry/exit
+- Live metrics panel (status, current zone, coordinates)
+- Zones persisted to PostgreSQL via Prisma
 
-## Learn More
+## Prerequisites
 
-To learn more about Next.js, take a look at the following resources:
+- Node.js 18+
+- A PostgreSQL database (or use [Prisma Postgres](https://www.prisma.io/postgres))
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Setup
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Clone the repository**
 
-## Deploy on Vercel
+   ```bash
+   git clone https://github.com/omarwaness/geo-location.git
+   cd geo-location
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. **Install dependencies**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   ```bash
+   npm install
+   ```
+
+3. **Set up the database**
+
+   Create a `.env` file in the root with your PostgreSQL connection string:
+
+   ```env
+   DATABASE_URL="postgresql://user:password@host:5432/dbname?sslmode=require"
+   ```
+
+   Or create a free hosted database:
+
+   ```bash
+   npx create-db
+   ```
+
+4. **Run migrations**
+
+   ```bash
+   npx prisma migrate dev
+   ```
+
+5. **Generate the Prisma client**
+
+   ```bash
+   npx prisma generate
+   ```
+
+6. **Start the dev server**
+
+   ```bash
+   npm run dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Tech Stack
+
+- [Next.js 16](https://nextjs.org) (App Router)
+- [MapLibre GL](https://maplibre.org) for the interactive map
+- [Prisma 7](https://www.prisma.io) with PostgreSQL
+- [Tailwind CSS 4](https://tailwindcss.com)
+- [shadcn/ui](https://ui.shadcn.com) components
+- [Sonner](https://sonner.emilkowal.dev) for toast notifications
